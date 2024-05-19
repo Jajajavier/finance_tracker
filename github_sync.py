@@ -41,10 +41,22 @@ def get_file_sha(repo, token):
     response = json.loads(output)
     return response.get("sha") if "sha" in response else None
 
+def download_file(repo, token):
+    url = f"https://api.github.com/repos/{repo}/contents/{DATA_FILE}"
+    headers = f"-H \"Authorization: token {token}\" -H \"Accept: application/vnd.github.v3.raw\""
+    command = f"curl {headers} -o {DATA_FILE} {url}"
+    output = run_curl_command(command)
+    return os.path.exists(DATA_FILE)
+
 def commit_and_push():
     config = get_github_config()
     repo = config["repo"]
     token = config["token"]
+
+    if not os.path.exists(DATA_FILE):
+        if not download_file(repo, token):
+            messagebox.showerror("Error", "Failed to download transactions.txt from GitHub.")
+            return
 
     with open(DATA_FILE, "rb") as file:
         content = file.read()
