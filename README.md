@@ -13,7 +13,7 @@ python finance_tracker.py
 1. Create a private repository on GitHub example: 'yourusername/myfinance'
 2. Generate a personal access token with repo access under settings, save it in a safe place
 3. When running the program, when selecting the option to save to GitHub, enter your repository name and personal access token when requested, those will be saved to a file in the same directory as the program
-### Note: The program will not save your personal access token in the file
+### Note: The program will save your personal access token in the file
 ### Note: When using in multiple devices you might end overwriting changes to your transactions repository, you can delete the transactions file and just hit the Sync option to get the latest transactions from the repository
 
 
