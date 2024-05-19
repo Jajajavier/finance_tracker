@@ -3,9 +3,12 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+import subprocess
+import json
 
 # File to store transactions
 DATA_FILE = "transactions.txt"
+CONFIG_FILE = "github_config.txt"
 
 # Function to load transactions from file
 def load_transactions():
@@ -162,6 +165,10 @@ def duplicate_transaction():
     for date, desc, amount in transactions:
         transactions_listbox.insert(tk.END, f"{date} | {desc} | ${amount:.2f}")
 
+# Function to synchronize with GitHub
+def synchronize_with_github():
+    subprocess.run(["python", "github_sync.py"])
+
 # Load existing transactions
 transactions = load_transactions()
 
@@ -230,6 +237,9 @@ edit_button.pack(pady=10)
 
 duplicate_button = tk.Button(root, text="Duplicate Transaction", command=duplicate_transaction)
 duplicate_button.pack(pady=10)
+
+sync_button = tk.Button(root, text="Sync with GitHub", command=synchronize_with_github)
+sync_button.pack(pady=10)
 
 # Update the balance initially
 update_balance()
